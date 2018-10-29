@@ -274,6 +274,7 @@ submitBut.addEventListener('click', el => {
 
    if (name.value.length <= 0 || !isValidUsername(name.value)){
       name.style.border = '2px solid red';
+      name.previousSibling.previousSibling.innerHTML = `<i>Please enter [a-z] symbols</i>`;
       el.preventDefault();
       numError -= 1;
    }
