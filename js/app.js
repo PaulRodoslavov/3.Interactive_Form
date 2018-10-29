@@ -101,9 +101,7 @@ activities.addEventListener('change', (el) => {
 
    labels.map(el => {
       if (el.firstChild.checked) {
-         // let checkRadio = false;
          activities.firstChild.nextSibling.style.color = '#184f68';
-         // activities.classList.remove('not-valid');
       }
    });
 
@@ -191,17 +189,10 @@ mail.addEventListener('input', el => {
    if (!isValidEmail(el.target.value)) {
       el.target.style.border = '2px red solid';
       mail.previousSibling.previousSibling.innerHTML = `<i>Please enter valid email</i>`;
-      // mail.previousSibling.previousSibling.classList.add('not-valid');
    } if (isValidEmail(el.target.value) || el.target.value.length <= 0){
       el.target.style.border = '2px solid #c1deeb';
       mail.previousSibling.previousSibling.innerHTML = 'Email:';
-      // mail.previousSibling.previousSibling.classList.remove('not-valid');
    }
-   // if (el.target.value.length <= 0) {
-   //    el.target.style.border = '2px solid #c1deeb';
-   //    mail.previousSibling.previousSibling.innerHTML = 'Email:';
-   //    // mail.previousSibling.previousSibling.classList.remove('not-valid');
-   // }
 });
 
 ccNum.addEventListener('input', el => {
@@ -242,9 +233,6 @@ cvv.addEventListener('input', el => {
    }
 });
 
-
-
-
 //functions for validation
 
 function isValidUsername(username) {
@@ -263,30 +251,22 @@ function isValidCVV(CardNumber) {
   return /^\d{3}$/.test(CardNumber);
 }
 
-
-const arrElements = [];
-arrElements.push(name, mail, ccNum, zip, cvv)
-
 submitBut.addEventListener('click', el => {
    // checks input fileds for name, mail
    let checkRadio = 0;
-   let numError = 5;
-
    if (name.value.length <= 0 || !isValidUsername(name.value)){
       name.style.border = '2px solid red';
-      name.previousSibling.previousSibling.innerHTML = `<i>Please enter [a-z] symbols</i>`;
+      name.previousSibling.previousSibling.innerHTML = `<i>Name should be filled out. Please enter [a-z] symbols</i>`;
       el.preventDefault();
-      numError -= 1;
    }
    if (mail.value.length <= 0 || !isValidEmail(mail.value)){
       mail.style.border = '2px solid red';
+      mail.previousSibling.previousSibling.innerHTML = `<i>Email should be filled out. Please enter valid email</i>`;
       el.preventDefault();
-      numError -= 1;
    }
-   // checks if at least one of radio chaked
+   //checks if at least one of radio chaked
    labels.map(el => {
       if (el.firstChild.checked) checkRadio += 1;
-      // else checkRadio += 1;
    });
    if (checkRadio) activities.firstChild.nextSibling.style.color = '#184f68';
    else {
@@ -294,28 +274,21 @@ submitBut.addEventListener('click', el => {
       el.preventDefault();
    }
 
-
    // checks input filed card number
-
-   // payment.options[3].setAttribute('selected', true);
 
    if (payment.options[1].selected) {
       if (!isValidCardNumber(ccNum.value) || ccNum.value.length <= 0) {
          ccNum.style.border = '2px solid red';
          el.preventDefault();
-         numError -= 1;
       }
       if (!isValidZip(zip.value) || zip.value.length <= 0) {
          zip.style.border = '2px solid red';
          el.preventDefault();
-         numError -= 1;
       }
       if (!isValidCVV(cvv.value) || cvv.value.length <= 0) {
          cvv.style.border = '2px solid red';
          el.preventDefault();
-         numError -= 1;
       }
-      arrElements[numError].focus();
    }
 });
 
