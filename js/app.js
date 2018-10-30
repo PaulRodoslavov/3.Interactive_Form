@@ -1,30 +1,30 @@
 // Veraibles of DOM elements
 
-const submitBut = document.getElementById('submitBut');
-const name = document.getElementById('name');
-const mail = document.getElementById('mail');
+const submitBut = $('#submitBut');
+const name = $('#name');
+const mail = $('#mail');
 const title = document.getElementById('title');
 const size = document.getElementById('size');
 const design = document.getElementById('design');
 const colorsJsPuns = document.getElementById('colors-js-puns');
 const payment = document.getElementById('payment');
 const creditCard = document.getElementById('credit-card');
-const activities = document.querySelector('.activities');
+const activities = $('.activities');
 const morning = [...document.querySelectorAll('.morning')];
 const day = [...document.querySelectorAll('.day')];
 const paypal = document.getElementById('paypal');
 const bitcoin = document.getElementById('bitcoin');
-const labels = [...activities.querySelectorAll('label')];
-const ccNum = document.getElementById('cc-num');
-const zip = document.getElementById('zip');
-const cvv = document.getElementById('cvv');
-
+const labels = [...$('label')];
+const ccNum = $('#cc-num');
+const zip = $('#zip');
+const cvv = $('#cvv');
+const jobRole = $('.jobRole');
 
 // create elements to view total price
 
 const totalPriceElement = document.createElement('p');
 totalPriceElement.innerHTML = `<p id="totalPriceText" class='is-hidden'>Total price: <span id="totalPrice"></span>$</p>`;
-activities.appendChild(totalPriceElement);
+activities.append(totalPriceElement);
 const totalPriceText = document.querySelector('#totalPriceText');
 
 
@@ -32,13 +32,13 @@ const totalPriceText = document.querySelector('#totalPriceText');
 
 name.focus();
 
-
 // adds input fileld for job role options
 
+jobRole.hide();
+
 title.onchange = (el) => {
-   const jobRole = document.querySelector('.jobRole');
-   if (el.target.value === 'other')  document.querySelector('.jobRole').style.display = 'block';
-   else jobRole.style.display = 'none';
+   if (el.target.value === 'other')  jobRole.css('display', 'block');
+   else jobRole.hide();
 };
 
 // adds features for design input
@@ -70,7 +70,7 @@ design.onchange = (el) => {
 // fetures for radio input
 
 let sum = 0;
-activities.addEventListener('change', (el) => {
+activities.on('change', (el) => {
 
    if (el.target.classList[0] === 'morning' && el.target.checked) {
       disabledTrue (morning, el.target);
@@ -101,7 +101,7 @@ activities.addEventListener('change', (el) => {
 
    labels.map(el => {
       if (el.firstChild.checked) {
-         activities.firstChild.nextSibling.style.color = '#184f68';
+         activities.first().css('color', '#184f68');
       }
    });
 
@@ -168,68 +168,64 @@ payment.options[1].setAttribute('selected', true);
 
 // check validation for username
 
-name.addEventListener('input', el => {
-   name.previousSibling.previousSibling.style.color = 'black';
+name.on('input', el => {
+   name.prev().css('color', 'black');
 
    if (!isValidUsername(el.target.value)) {
       el.target.style.border = '2px red solid';
-      name.previousSibling.previousSibling.innerHTML = `<i>Please enter [a-z] symbols</i>`;
-      name.previousSibling.previousSibling.classList.add('not-valid');
+      name.prev().html(`<i>Please enter [a-z] symbols</i>`);
    } if (isValidUsername(el.target.value) || el.target.value.length <= 0){
       el.target.style.border = '2px solid #c1deeb';
-      name.previousSibling.previousSibling.innerHTML = 'Name:';
-      name.previousSibling.previousSibling.classList.remove('not-valid');
+      name.prev().html('Name:');
    }
 });
 
 // check validation for email
 
-mail.addEventListener('input', el => {
-   mail.previousSibling.previousSibling.style.color = 'black';
+mail.on('input', el => {
+   mail.prev().css('color', 'black');
    if (!isValidEmail(el.target.value)) {
       el.target.style.border = '2px red solid';
-      mail.previousSibling.previousSibling.innerHTML = `<i>Please enter valid email</i>`;
+      mail.prev().html(`<i>Please enter valid email</i>`);
    } if (isValidEmail(el.target.value) || el.target.value.length <= 0){
       el.target.style.border = '2px solid #c1deeb';
-      mail.previousSibling.previousSibling.innerHTML = 'Email:';
+      mail.prev().html('Email:');
    }
 });
 
-ccNum.addEventListener('input', el => {
-   const cardNumber = ccNum.previousSibling.previousSibling;
-
-
-   if (isValidCardNumber(ccNum.value) || ccNum.value.length <= 0) {
-      ccNum.style.border = '2px solid #c1deeb';
-      cardNumber.innerHTML = `Card Number:`;
+ccNum.on('input', el => {
+   const cardNumber = ccNum.prev();
+   if (isValidCardNumber(ccNum.val()) || ccNum.val().length <= 0) {
+      ccNum.css('border', '2px solid #c1deeb');
+      cardNumber.html(`Card Number:`);
    }
    else {
-      ccNum.style.border = '2px red solid';
-      cardNumber.innerHTML = `<i>Valid number from 13 to 16 digits long</i>`;
+      ccNum.css('border', '2px red solid');
+      cardNumber.html(`<i>Valid number from 13 to 16 digits long</i>`);
    }
 });
 
-zip.addEventListener('input', el => {
-   const zipText = zip.previousSibling.previousSibling;
-   if (isValidZip(zip.value) || zip.value.length <= 0) {
-      zip.style.border = '2px solid #c1deeb';
-      zipText.innerHTML = `Zip Code:`;
+zip.on('input', el => {
+   const zipText = zip.prev();
+   if (isValidZip(zip.val()) || zip.val().length <= 0) {
+      zip.css('border', '2px solid #c1deeb');
+      zipText.html(`Zip Code:`);
    }
    else {
-      zip.style.border = '2px red solid';
-      zipText.innerHTML = `<i>Only 5 digits</i>`;
+      zip.css('border', '2px red solid');
+      zipText.html(`<i>Only 5 digits</i>`);
    }
 });
 
-cvv.addEventListener('input', el => {
-   const cvvText = cvv.previousSibling.previousSibling;
-   if (isValidCVV(cvv.value) || cvv.value.length <= 0) {
-      cvv.style.border = '2px solid #c1deeb';
-      cvvText.innerHTML = `CVV:`;
+cvv.on('input', el => {
+   const cvvText = cvv.prev();
+   if (isValidCVV(cvv.val()) || cvv.val().length <= 0) {
+      cvv.css('border', '2px solid #c1deeb');
+      cvvText.html(`CVV:`);
    }
    else {
-      cvv.style.border = '2px red solid';
-      cvvText.innerHTML = `<i>Only 3 digits</i>`;
+      cvv.css('border', '2px red solid');
+      cvvText.html(`<i>Only 3 digits</i>`);
    }
 });
 
@@ -251,42 +247,44 @@ function isValidCVV(CardNumber) {
   return /^\d{3}$/.test(CardNumber);
 }
 
-submitBut.addEventListener('click', el => {
+submitBut.on('click', el => {
    // checks input fileds for name, mail
    let checkRadio = 0;
-   if (name.value.length <= 0 || !isValidUsername(name.value)){
-      name.style.border = '2px solid red';
-      name.previousSibling.previousSibling.innerHTML = `<i>Name should be filled out. Please enter [a-z] symbols</i>`;
-      el.preventDefault();
+
+   if (name.val().length <= 0 || !isValidUsername(name.val())){
+      name.css('border', '2px solid red');
+       name.prev().html(`<i>Name should be filled out. Please enter [a-z] symbols</i>`);
+       el.preventDefault();
    }
-   if (mail.value.length <= 0 || !isValidEmail(mail.value)){
-      mail.style.border = '2px solid red';
-      mail.previousSibling.previousSibling.innerHTML = `<i>Email should be filled out. Please enter valid email</i>`;
+
+   if (mail.val().length <= 0 || !isValidEmail(mail.val())){
+      mail.css('border', '2px solid red');
+      mail.prev().html(`<i>Email should be filled out. Please enter valid email</i>`);
       el.preventDefault();
    }
    //checks if at least one of radio chaked
    labels.map(el => {
       if (el.firstChild.checked) checkRadio += 1;
    });
-   if (checkRadio) activities.firstChild.nextSibling.style.color = '#184f68';
+   if (checkRadio) activities.first().css('color', '#184f68');
    else {
-      activities.firstChild.nextSibling.style.color = 'red';
+      activities.first().css('color', 'red');
       el.preventDefault();
    }
 
    // checks input filed card number
 
    if (payment.options[1].selected) {
-      if (!isValidCardNumber(ccNum.value) || ccNum.value.length <= 0) {
-         ccNum.style.border = '2px solid red';
+      if (!isValidCardNumber(ccNum.val()) || ccNum.val().length <= 0) {
+         ccNum.css('border', '2px solid red');
          el.preventDefault();
       }
-      if (!isValidZip(zip.value) || zip.value.length <= 0) {
-         zip.style.border = '2px solid red';
+      if (!isValidZip(zip.val()) || zip.val().length <= 0) {
+         zip.css('border', '2px solid red');
          el.preventDefault();
       }
-      if (!isValidCVV(cvv.value) || cvv.value.length <= 0) {
-         cvv.style.border = '2px solid red';
+      if (!isValidCVV(cvv.val()) || cvv.val().length <= 0) {
+         cvv.css('border', '2px solid red');
          el.preventDefault();
       }
    }
